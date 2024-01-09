@@ -18,18 +18,13 @@ public class Main {
       int n = Integer.parseInt(br.readLine());
 
       int[][] array = new int[n][2];
-
-      List<ArrayList> array1 = new ArrayList<>();
+      
       int i,j;
 
       for(i=0; i<n ;i++){
-
           st = new StringTokenizer(br.readLine());
-
-          array[i][0] = Integer.parseInt(st.nextToken());
+          array[i][0] = Integer.parseInt(st.nextToken()); // 공백을 기준으로 수를 받아준다 
           array[i][1] = Integer.parseInt(st.nextToken());
-
-
       }
 
       Arrays.sort(array, new Comparator<int[]>(){
