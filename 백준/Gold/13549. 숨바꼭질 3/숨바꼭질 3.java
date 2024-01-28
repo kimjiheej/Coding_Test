@@ -2,73 +2,48 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
+import java.util.*;
 
-// 숨바꼭질3 문제 - 13549번
-class Human {
-    int x;
-    int time;
-
-    public Human(int x, int time) {
-        this.x = x;
-        this.time = time;
-    }
-}
 
 public class Main {
 
-    static int N, K;
-    static int time = Integer.MAX_VALUE;
-    static boolean[] visited = new boolean[100001];
-
+    static int map[] = new int[100001];
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        N = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
+        int a = Integer.parseInt(st.nextToken()); // 수빈이가 있는 위치이다
+        int b = Integer.parseInt(st.nextToken()); // 동생이 있는 위치이다
 
-        if(N == K){
-            System.out.println(0);
-        }else {
-            bfs(N);
-            System.out.println(time);
-        }
-    }
+        Queue<Integer> q = new LinkedList<>();
 
-    static void bfs(int start) {
-        Queue<Human> q = new LinkedList<>();
-        q.offer(new Human(start, 0));
-        visited[start] = true;
+        q.add(a); // 수빈이의 위치를 넣는다
+        map[a] = 1;
 
-        while (!q.isEmpty()) {
-            Human now = q.poll();
-
-            if(now.x == K) {
-                time = Math.min(time, now.time);
+        while(!q.isEmpty()){
+            int check = q.poll();
+            if(check == b)
+            {
+                System.out.print(map[check]-1);
+                return;
             }
 
-            int next;
-            // 다음에서 영역을 방문 처리
-            // *2의 경우 time 이 증가하지 않으므로 다른 이동보다 먼저 계산되어야함.
-            next = now.x * 2;
-            if(next < 100001 && !visited[next]) {
-                visited[next] = true;
-                q.offer(new Human(next, now.time));
+            if((check *2 >=0) && (check * 2 <=100000) && map[check*2] == 0){
+
+                q.add(check*2);
+                map[check*2] = map[check];
+            }
+            if((check-1 >= 0) && (check -1 <= 100000) && (map[check-1]==0)){
+                q.add(check-1);
+                map[check-1] = map[check]+1;
+            }
+            if((check+1 >=0) && (check+1 <= 100000) && (map[check+1] ==0)){
+                q.add(check+1);
+                map[check+1] = map[check]+1;
             }
 
-            next = now.x - 1;
-            if(next >= 0 && !visited[next]) {
-                visited[next] = true;
-                q.offer(new Human(next, now.time + 1));
-            }
-
-            next = now.x + 1;
-            if(next < 100001 && !visited[next]) {
-                visited[next] = true;
-                q.offer(new Human(next, now.time + 1));
-            }
         }
     }
 }
