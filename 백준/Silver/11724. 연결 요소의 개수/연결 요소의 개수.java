@@ -1,57 +1,56 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 public class Main {
 
-    static boolean visited[];
-    static ArrayList<Integer>[] A;
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
 
 
-        visited = new boolean[n+1];
-        A = new ArrayList[n+1];
+    public static int[][] map ; // 노드가 연결된 정보
+    public static boolean[] visited; // 노드 방문 여부
+    public static int result = 0; // 연결된 노드 횟수
 
-        for(int i=1; i<n+1; i++)
-            A[i] = new ArrayList<Integer>();
-
-        for(int i=0; i<m; i++){
-            st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
-            int e = Integer.parseInt(st.nextToken());
-
-            A[s].add(e);
-            A[e].add(s);
-        }
-
-        int count = 0;
-
-        for(int i=1; i<n+1; i++) {
-            if (!visited[i]) {
-                count++;
-                DFS(i);
+    public static void solution(){
+    
+        for(int i=1; i<visited.length;i++){
+            if(!visited[i])
+            {
+                dfs(i);
+                result++;
             }
         }
-
-        System.out.println(count);
+    }
+    public static void dfs(int u){
+        visited[u] = true;
+        
+        for(int i=1; i<visited.length;i++){
+            if(map[u][i] == 1 && !visited[i])
+                dfs(i);
+        }
     }
 
-    public static void DFS(int v){
-        if(visited[v])
-            return;
+    public static void main (String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        visited[v] = true;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        map = new int[n+1][n+1];
+        visited = new boolean[n+1];
 
-        for(int i : A[v])
-            if(visited[i] == false)
-                DFS(i);
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
 
+            map[u][v] = 1;
+            map[v][u] = 1;
+        }
+
+        solution();
+        bw.write(result+"");
+
+        br.close();
+        bw.close();
     }
-}
+    }
+
