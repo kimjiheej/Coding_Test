@@ -1,8 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
 
@@ -10,37 +10,53 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int[] array = new int[9];
-        int[] array1 = new int[7]; // 여기에다가 저장해주자
+        int[] arr = new int[9];
+
         int total = 0;
-        int a = 0;
-        int b = 0;
 
         for(int i=0; i<9; i++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            array[i] = Integer.parseInt(st.nextToken());
-            total += array[i];
+            arr[i] = Integer.parseInt(br.readLine());
+            total += arr[i];
         }
 
-        for(int i=0; i<8; i++){
-            for(int j=i+1; j<9; j++)
-                if(total - array[i]-array[j] == 100)
-                {
-                     a = array[i];
-                     b = array[j];
+        int check = total - 100;
+
+        int p = 0;
+        int q = 0;
+
+        boolean cc  = true;
+
+        for(int i=0; i<9; i++){
+
+            cc = false;
+            for(int j=i+1; j<9; j++){
+                if(arr[i]+arr[j] == check){
+                    p = i;
+                    q = j;
+                    cc = true;
+                    break;
                 }
+            }
+
+            if(cc)
+                break;
+
         }
 
-        int k = 0;
-        for(int i=0; i<9; i++) {
-            if(array[i] == a || array[i] == b)
-                continue;
-            array1[k++] = array[i];
+        ArrayList<Integer> answer = new ArrayList<>();
+
+
+        for(int i=0; i<9; i++){
+            if(i != p && i !=q)
+                answer.add(arr[i]);
         }
 
-        Arrays.sort(array1);
 
-        for(int i=0; i<7; i++)
-            System.out.println(array1[i]);
+        Collections.sort(answer);
+
+        for(int k : answer){
+            System.out.println(k);
+        }
+
     }
 }
