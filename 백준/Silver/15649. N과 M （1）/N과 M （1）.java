@@ -5,40 +5,44 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int n, m;
-    static int arr[];
-    static boolean issued[];
+
+    static boolean isused[] = new boolean[10];
+    static int check[] = new int[10];
+
+    static int n;
+    static int m;
+
 
     public static void main(String[] args) throws IOException {
 
+        // 완전 탐색 문제이다.
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        arr = new int[10];
-        issued = new boolean[10];
+         n = Integer.parseInt(st.nextToken());
+         m = Integer.parseInt(st.nextToken());
 
-        func(0);
+        dfs(0);
 
     }
 
-    public static void func(int k) {
+    public static void dfs(int k){
 
-
-        if (k == m) {
-            for (int i = 0; i < m; i++) {
-                System.out.print(arr[i] + " ");
+        if(k==m){
+            for(int i=0; i<m; i++){
+                System.out.print(check[i]+" ");
             }
             System.out.println();
             return;
         }
-        for (int i = 1; i <= n; i++) {
-            if (!issued[i]) {
-                arr[k] = i;
-                issued[i] = true;
-                func(k + 1);
-                issued[i] = false;
+        for(int i=1; i<=n; i++){
+            if(!isused[i]){
+                check[k] = i; // 넣은 다음에
+                isused[i] = true; // 방문했다고 표시하기
+                dfs(k+1);
+                isused[i] = false;
             }
         }
     }
