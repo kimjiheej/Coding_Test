@@ -29,3 +29,6 @@ public class Main {
 
     }
 }
+/*
+  sort 함수 사용하면 된다...!
+ */
