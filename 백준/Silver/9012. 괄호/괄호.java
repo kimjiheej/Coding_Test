@@ -2,43 +2,54 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Main {
 
-
     public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-StringBuilder sb = new StringBuilder();
-        int n = Integer.parseInt(br.readLine());
 
-        for(int i=0; i<n; i++){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        int a = Integer.parseInt(br.readLine());
+
+        boolean isValid;
+
+        for(int i=0; i<a; i++){
+
+            isValid = true;
+
+            Stack<Character> k = new Stack<>();
+
             String s = br.readLine();
 
-            boolean valid = true;
-            char[] array = s.toCharArray();
+            char[] array = s.toCharArray(); // 문자열의 요소를 하나하나 문자로 만들어주는 함수
 
-            Stack<String> st = new Stack<>();
-
-            for(int j=0; j<array.length;j++){
+            for(int j=0; j<array.length; j++){
                 if(array[j] == '(')
-                    st.push(String.valueOf(array[j]));
-                else if(array[j] == ')')
                 {
-                    if(!st.isEmpty() && st.peek().equals("("))
-                        st.pop();
-                    else {
-                        valid = false;
+                    k.push('(');
+                }
+                else {
+                    if(k.isEmpty() || k.peek() != '(') {
+                        isValid = false;
                         break;
                     }
+
+                    k.pop();
                 }
             }
 
-            if(st.isEmpty() && valid == true)
+            if(!k.isEmpty())
+                isValid = false;
+
+            if(isValid)
                 sb.append("YES\n");
             else
                 sb.append("NO\n");
         }
+
         System.out.println(sb.toString());
     }
 }
