@@ -1,31 +1,32 @@
-
-import java.util.Scanner;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
 
-    // algo1874
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
 
-        int n;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = sc.nextInt();
+        int a = Integer.parseInt(br.readLine());
 
-        Queue myQueue = new LinkedList();
+        Queue<Integer> q = new LinkedList<>();
 
-        int i,j;
+        for(int i=1; i<=a; i++)
+            q.add(i);
 
-        for(i=1; i<=n; i++)
-            myQueue.add(i);
+        int k = 0;
 
-        for(j=0; j<n-1; j++){
-            myQueue.poll();
-
-            int k = (int) myQueue.poll();
-            myQueue.add(k);
+        while(q.size() > 1) {
+            q.poll();
+            k = q.poll();
+            q.add(k);
         }
 
-        System.out.println(myQueue.poll());
+        System.out.println(q.peek());
+
+
     }
 }
