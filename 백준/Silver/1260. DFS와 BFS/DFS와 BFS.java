@@ -48,12 +48,7 @@ public class Main {
 
         check[t] = true;
         System.out.print(t+" ");
-
-        if(count == a){
-            return;
-        }
-        count++;
-
+        
         for(int i=1; i<=a; i++){
             if(!check[i] && graph[t][i] != 0 ){
                 dfs(i);
@@ -81,3 +76,7 @@ public class Main {
         }
     }
 }
+/*
+  BFS 와 DFS 의 기본 틀이다 잘 외워두자 !!
+
+ */
