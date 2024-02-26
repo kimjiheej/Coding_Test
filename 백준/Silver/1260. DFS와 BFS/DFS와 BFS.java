@@ -4,77 +4,79 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 public class Main {
 
-    static boolean visitied[];
-    static int map[][];
+    static int graph[][];
+    static boolean check[];
 
-    static boolean visited1[];
+    static int a ;
+    static int b;
 
-    static int[] dx = {-1,0,1,0};
-    static int[] dy = {0,1,0,-1};
+    static int count;
 
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int a = Integer.parseInt(st.nextToken()); // 정점 개수
-        int b = Integer.parseInt(st.nextToken()); // 간선 개수
-        int c = Integer.parseInt(st.nextToken()); // 탐색을 시작할 번호
 
+         a = Integer.parseInt(st.nextToken());
+         b = Integer.parseInt(st.nextToken());
+        int start = Integer.parseInt(st.nextToken());
 
+        graph = new int[a+1][a+1];
+        check = new boolean[a+1];
 
-        visitied = new boolean[a + 1];
-        map = new int[a + 1][a + 1];
-
-
-        for (int i = 0; i < b; i++) {
+        for(int i=0; i<b; i++){
             st = new StringTokenizer(br.readLine());
-            int q = Integer.parseInt(st.nextToken());
-            int p = Integer.parseInt(st.nextToken());
-            map[q][p] = 1;
-            map[p][q] = 1;
+
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+
+            graph[x][y] = 1;
+            graph[y][x] = 1;
         }
 
-        visitied[c] = true;
-        dfs(c);
+        dfs(start);
         System.out.println();
+        bfs(start);
+    }
 
-        visited1 = new boolean[a + 1];
+    public static void dfs(int t){ // stack 사용하지 않고 그냥 재귀로 해준다
 
-        visited1[c] = true;
+        check[t] = true;
+        System.out.print(t+" ");
 
-        Queue<Integer> q = new LinkedList<>();
+        if(count == a){
+            return;
+        }
+        count++;
 
-        q.add(c);
-        System.out.print(c + " ");
-
-        while (!q.isEmpty()) {
-
-            int check = q.poll();
-            for (int i = 1; i <= a; i++) {
-                if (map[check][i] == 1 && visited1[i] == false) {
-                    q.add(i);
-                    visited1[i] = true;
-                    System.out.print(i + " ");
-                }
+        for(int i=1; i<=a; i++){
+            if(!check[i] && graph[t][i] != 0 ){
+                dfs(i);
             }
         }
     }
-    
 
-    public static void dfs(int u){
+    public static void bfs(int t){
+        boolean[] visitied = new boolean[a+1];
+        Queue<Integer> q = new LinkedList<>();
 
-        visitied[u] = true;
-        System.out.print(u+" ");
+        visitied[t] = true;
+        q.add(t);
 
-        for(int i=1; i<visitied.length; i++){
-            if(!visitied[i] && map[u][i]==1)
-            {
-                dfs(i);
+        while(!q.isEmpty()){
+            int curr = q.remove();
+            System.out.print(curr+" ");
+
+            for(int i=1; i<=a; i++){
+                if(!visitied[i] && graph[curr][i] !=0){
+                    visitied[i] = true;
+                    q.add(i);
+                }
             }
         }
     }
