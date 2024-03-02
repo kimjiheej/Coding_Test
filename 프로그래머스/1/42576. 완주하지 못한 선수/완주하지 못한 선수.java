@@ -1,23 +1,26 @@
 import java.util.*;
+
 class Solution {
     public String solution(String[] participant, String[] completion) {
         
-        String answer ="";
+        String answer = "";
+        Map<String,Integer> map = new HashMap<>();
         
-        HashMap<String,Integer> map = new HashMap<>();
-        
-        for(String player : participant){
-            map.put(player, map.getOrDefault(player,0) + 1);
+        for(int i=0; i<participant.length; i++){
+            map.put(participant[i], map.getOrDefault(participant[i], 0) +1);
         }
         
-        for(String player : completion){
-            map.put(player, map.get(player)-1); // 새로 들어온 것은 갱신됨. 덮어씌워짐. 
+        for(int i=0; i<completion.length; i++){
+            map.put(completion[i], map.get(completion[i])-1);
         }
         
-       for(Map.Entry<String,Integer> elem : map.entrySet()){
-           if(elem.getValue() > 0 )
-               answer = elem.getKey();
-       }
+        for(Map.Entry<String,Integer> elem : map.entrySet()){
+            if(elem.getValue() > 0)
+            {
+                answer = elem.getKey();
+                break;
+            }
+        }
         
         return answer;
     }
