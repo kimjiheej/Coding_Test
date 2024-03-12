@@ -1,30 +1,25 @@
 import java.util.*;
+
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
+        int[] answer = new int[commands.length];
+        int count = 0;
         
-        int i,j;
-        int start, finish, count;
-        int p,q;
-        List<Integer>answer = new ArrayList<Integer>();
-        
-        for(i=0; i<commands.length; i++){
-            List<Integer> list = new ArrayList<Integer>();
-            start = commands[i][0];
-            finish = commands[i][1];
-            count = commands[i][2];
+        for(int i=0; i<commands.length; i++){
+                int first = commands[i][0] -1;
+                int second = commands[i][1] -1;
+                int stop = commands[i][2];
+                
+            ArrayList<Integer> ans = new ArrayList<Integer>();
             
-            for(p=start-1; p<finish; p++){
-                list.add(array[p]);
+                for(int j = first; j<=second; j++){
+                    ans.add(array[j]);
+                }
+            
+            Collections.sort(ans);
+            answer[count++]  = ans.get(stop-1);
             }
-            Collections.sort(list);
-            answer.add(list.get(count-1));
+          return answer;
         }
-        
-          int[] result = new int[answer.size()];
-        for (i = 0; i < answer.size(); i++) {
-            result[i] = answer.get(i);
-        }
-        
-        return result;
+      
     }
-}
