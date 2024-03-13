@@ -1,25 +1,23 @@
 import java.util.*;
 class Solution {
     public String solution(int[] numbers) {
-            String answer = "";
-        boolean except = true;
-        String[] num = new String[numbers.length];
+        String[] arr = new String[numbers.length];
         
-        for(int i = 0; i < num.length; i++){
-            num[i] = String.valueOf(numbers[i]);        
-            if(numbers[i] != 0) 
-                except = false;
+        for(int i=0; i<arr.length; i++){
+            arr[i] = String.valueOf(numbers[i]);
+        }
+    
+      Arrays.sort(arr, (o1,o2) -> (o2+o1).compareTo(o1+o2));
+        
+        if(arr[0].equals("0")){
+            return "0";
+        }
+        StringBuilder answer = new StringBuilder();
+        
+        for(int i=0; i<arr.length; i++){
+            answer.append(arr[i]);
         }
         
-        Arrays.sort(num, new Comparator<String>(){
-           @Override
-            public int compare(String n1, String n2) {
-                return (n2+n1).compareTo(n1+n2);
-            }
-        });
-        for(int i = 0; i < num.length; i++)
-            answer += num[i];
-        if(except) answer = "0";
-        return answer;
+        return answer.toString();
     }
 }
