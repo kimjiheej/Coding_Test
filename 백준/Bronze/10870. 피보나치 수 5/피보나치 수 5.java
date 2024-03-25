@@ -1,8 +1,12 @@
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
+
+    static int d[] = new int[100];
 
     public static void main(String[] args) throws IOException {
 
@@ -10,17 +14,21 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        int q = fibo(n);
 
-        System.out.println(q);
+        System.out.println(fibo(n));
     }
 
-    static int fibo(int n){
-        if(n==0)
-            return 0;
-        if(n==1)
-            return 1;
 
-        return fibo(n-1)+fibo(n-2);
+    public static int fibo(int num) {
+
+      d[0] = 0;
+      d[1] = 1;
+
+      for(int i=2; i<=num; i++){
+          d[i] = d[i-1] + d[i-2];
+      }
+
+      return d[num];
     }
+
 }
