@@ -1,60 +1,58 @@
 import java.util.*;
 
-
 class Solution {
     
-    static int dx[] = {1,0,-1,0};
-static int dy[] = {0,1,0,-1};
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {-1, 0, 1, 0};
     
+    static int[][] visited;
     
     public int solution(int[][] maps) {
-        int answer = 0;
         
-        int[][] visited = new int[maps.length][maps[0].length];
-            
-        bfs(maps,visited);
-        answer = visited[maps.length-1][maps[0].length-1];
+        int n = maps.length; // 행의 길이
+        int m = maps[0].length; // 열의 길이
         
-        if(answer == 0 )
-            answer = -1; 
+        visited = new int[n][m]; // 행과 열 길이로 설정
         
-        return answer;
+        // visited 배열 초기화
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(visited[i], 0);
+        }
         
+        bfs(0, 0, maps, n, m);
+        
+        if (visited[n - 1][m - 1] == 0)
+            return -1;
+        else 
+            return visited[n - 1][m - 1];
     }
     
-    public void bfs(int[][] maps, int[][] visited){
-        int x = 0;
-        int y = 0;
+    public static void bfs(int x, int y, int[][] maps, int n, int m) {
+        
+        Queue<int[]> queue = new LinkedList<>();
         
         visited[x][y] = 1;
         
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{x,y});
+        queue.add(new int[] {x, y});
         
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
+            int[] ak = queue.poll();
+            int a = ak[0];
+            int b = ak[1];
             
-            int[] current = queue.remove();
-            
-            int cx = current[0];
-            int cy = current[1];
-            
-            for(int i=0; i<4; i++){
-                int nx = cx + dx[i];
-                int ny = cy + dy[i];
+            for (int i = 0; i < 4; i++) {
+                int xx = a + dx[i];
+                int yy = b + dy[i];
                 
-                if(nx < 0 || ny < 0 || nx > maps.length-1 || ny > maps[0].length-1)
+                if (xx < 0 || yy < 0 || xx >= n || yy >= m)
                     continue;
                 
-                if(visited[nx][ny] == 0 && maps[nx][ny] == 1)
-                {
-                    visited[nx][ny] = visited[cx][cy] + 1;
-                    queue.add(new int[]{nx,ny});
-                }
+                if (maps[xx][yy] == 0 || visited[xx][yy] != 0)
+                    continue;
                 
+                visited[xx][yy] = visited[a][b] + 1;
+                queue.add(new int[]{xx, yy});
             }
         }
-        
     }
-    
-    
 }
