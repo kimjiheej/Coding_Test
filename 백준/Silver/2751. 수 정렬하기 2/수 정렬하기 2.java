@@ -1,42 +1,28 @@
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-import java.util.*;
+import java.io.*;
+import java.util.Arrays;
 
 public class Main {
 
-    public static int[] src;
-    public static int[] tmp;
-
-    // algo1874
     public static void main(String[] args) throws IOException {
 
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        int n = Integer.parseInt(bf.readLine());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int[] array = new int[n];
-        tmp = new int[array.length];
-        int i, j;
+        int a = Integer.parseInt(br.readLine());
 
-        List<Integer> array1 = new ArrayList<>();
+        Integer[] arr = new Integer[a];
 
-
-        for (i = 0; i < array.length; i++) {
-            array1.add(Integer.parseInt(bf.readLine()));
+        for(int i=0; i<a; i++){
+            arr[i] = Integer.parseInt(br.readLine());
         }
 
+        Arrays.sort(arr);
 
-
-       Collections.sort(array1);
-
-        for(int a : array1){
-            sb.append(a).append("\n");
+        for(int i : arr){
+           bw.write(i+"\n");
         }
-        
-        System.out.println(sb);
+
+        bw.flush();
+        bw.close();
     }
 }
-
