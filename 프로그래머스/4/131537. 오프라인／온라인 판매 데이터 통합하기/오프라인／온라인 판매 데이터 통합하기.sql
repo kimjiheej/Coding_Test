@@ -1,4 +1,4 @@
- SELECT DATE_Format(SALES_DATE, '%Y-%m-%d') as SALES_DATE, -- '2022-05-24'형식으로 포맷
+    SELECT DATE_Format(SALES_DATE, '%Y-%m-%d') as SALES_DATE, -- '2022-05-24'형식으로 포맷
            PRODUCT_ID, -- 제품 ID
            USER_ID,  -- 회원 ID
            SALES_AMOUNT -- 판매량
